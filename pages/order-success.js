@@ -20,7 +20,6 @@ const OrderSuccess = () => {
             <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
             <h1>Your Order was Successful!</h1>
             <p>Thank you for your purchase. Your order has been processed.</p>
-            {/* Add additional content or styling as needed */}
         </div>
     );
 };
