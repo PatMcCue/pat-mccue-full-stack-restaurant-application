@@ -48,7 +48,7 @@ function Dishes({ restId, searchTerm }) {
                     <Col xs="12" sm="6" md="6" lg="6" style={{ padding: 0 }} key={res.id}>
                         <Card style={{ margin: '0 0.5rem 20px 0.5rem', maxHeight: '500px' }}>
                             <CardTitle className="dish-name">
-                                {res.name} - ${res.price}
+                                {res.name} - ${res.price.toFixed(2)}
                             </CardTitle>
                             <CardImg
                                 top={true}

@@ -85,7 +85,7 @@ function RestaurantList(props) {
             </Container>
         );
     } else {
-        return <h1> No Restaurants Found</h1>;
+        return <h1>Hmm... We don't know any places by that name.</h1>;
     }
 }
 export default RestaurantList;
