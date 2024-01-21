@@ -31,6 +31,7 @@ function MyApp(props) {
                     rel="stylesheet"
                 />
                 <title>{title}</title>
+                <link rel="icon" href="/delivery-man.png" />
                 <script src="https://js.stripe.com/v3" />
             </Head>
 
