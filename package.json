@@ -27,7 +27,7 @@
         "stripe": "^14.9.0"
     },
     "engines": {
-        "node": ">=14.0.0 <16.0.0"
+        "node": ">=14.0.0 <20.0.0"
     },
     "description": "Exercise05 is full Shopping Cart with Stripe Billing",
     "main": "index.js",

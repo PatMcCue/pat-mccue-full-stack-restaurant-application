@@ -1,10 +1,20 @@
-FROM node:18-alpine
+FROM node:14-alpine
+
 WORKDIR /patmccuefullstackrestaurantapplication/
 
 COPY public/ /patmccuefullstackrestaurantapplication/public
 COPY src/ /patmccuefullstackrestaurantapplication/src
 COPY package.json /patmccuefullstackrestaurantapplication/
+COPY pages/ /patmccuefullstackrestaurantapplication/pages
+COPY yarn.lock /patmccuefullstackrestaurantapplication/
 
-RUN npm install
+RUN yarn install
 
-CMD ["npm", "start"]
+# Build the Next.js app
+RUN yarn build
+
+# EXPOSE 8080
+EXPOSE 3000
+
+CMD ["yarn", "start"]
+
