@@ -1,0 +1,13 @@
+FROM node:14-alpine
+
+WORKDIR /patmccuefullstackrestaurantapplication/
+
+COPY package*.json ./
+
+RUN yarn install
+
+COPY . .
+
+EXPOSE 1337
+
+CMD ["yarn", "start"]
