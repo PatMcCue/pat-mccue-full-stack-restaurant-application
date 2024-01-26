@@ -4,7 +4,9 @@ WORKDIR /patmccuefullstackrestaurantapplication/
 
 COPY package*.json ./
 
-RUN yarn install
+RUN npm install
+
+RUN yarn build
 
 COPY . .
 
