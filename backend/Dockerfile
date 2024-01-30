@@ -4,7 +4,7 @@ WORKDIR /patmccuefullstackrestaurantapplication
 
 COPY package*.json ./
 
-COPY backend ./
+COPY . backend
 
 RUN yarn install
 
