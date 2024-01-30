@@ -1,14 +1,14 @@
 FROM node:14-alpine
 
-WORKDIR /patmccuefullstackrestaurantapplication/
+WORKDIR /patmccuefullstackrestaurantapplication
 
 COPY package*.json ./
 
-RUN npm install
+COPY backend ./
+
+RUN yarn install
 
 RUN yarn build
-
-COPY . .
 
 EXPOSE 1337
 
