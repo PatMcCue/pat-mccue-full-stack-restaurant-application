@@ -30,7 +30,7 @@ function Home() {
       <h2 className="home-header">Discover Restaurants Near You!</h2>
         <div className="search">
           <InputGroup>
-            <InputGroupText> Search</InputGroupText>
+            <InputGroupText>Search Here</InputGroupText>
             <Input
               onChange={(e) => setQuery(e.target.value.toLocaleLowerCase())}
               value={query}
