@@ -13,7 +13,7 @@ const Logo = () => {
 };
 
 function Home() {
-    const API_URL = 'https://hidden-plains-66088-f5a6410d8330.herokuapp.com'; //process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
     console.log(`URL: ${API_URL}`);
     const [query, setQuery] = useState('');
     const link = new HttpLink({ uri: `${API_URL}/graphql` });
