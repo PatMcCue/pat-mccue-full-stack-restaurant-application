@@ -51,11 +51,29 @@ function RestaurantDetails() {
     }
     const [searchTerm, setSearchTerm] = useState('');
 
+    const GET_RESTAURANT = gql`
+        query GetRestaurant($id: ID!) {
+            restaurant(id: $id) {
+                id
+                name
+            }
+        }
+    `;
+
+    if (restaurantLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (restaurantError) {
+        return <p>Error loading restaurant details</p>;
+    }
+
+    const restaurantName = restaurantData.restaurant.name;
+
     return (
         <ApolloProvider client={client}>
             <div>
-                <h1>Restaurant Details</h1>
-                <h2>Restaurant ID: {id}</h2>
+                <h1>{restaurantName}</h1>
 
                 {/* Search bar */}
                 <input
