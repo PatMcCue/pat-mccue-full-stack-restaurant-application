@@ -52,7 +52,7 @@ function RestaurantList(props) {
                                         width: '100%',
                                         height: '100%',
                                     }}
-                                    src={`http://localhost:1337` + res.image.url}
+                                    src={`https://hidden-plains-66088-f5a6410d8330.herokuapp.com/` + res.image.url}
                                 />
                             </div>
                             <CardBody style={{ height: '400px', overflow: 'hidden' }}>
