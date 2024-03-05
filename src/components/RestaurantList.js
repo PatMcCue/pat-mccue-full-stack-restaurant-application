@@ -76,7 +76,7 @@ function RestaurantList(props) {
                 </Link>
             </Col>
         ));
-        console.log(res.image.url);
+        console.log(`Image URL: ${res.image.url}`);
 
         return (
             <Container>
