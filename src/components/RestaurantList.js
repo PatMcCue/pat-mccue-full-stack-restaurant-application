@@ -52,7 +52,7 @@ function RestaurantList(props) {
                                         width: '100%',
                                         height: '100%',
                                     }}
-                                    src={res.image.url}
+                                    src={`http://localhost:1337` + res.image.url}
                                 />
                             </div>
                             <CardBody style={{ height: '400px', overflow: 'hidden' }}>
@@ -76,6 +76,7 @@ function RestaurantList(props) {
                 </Link>
             </Col>
         ));
+        console.log(res.image.url);
 
         return (
             <Container>
