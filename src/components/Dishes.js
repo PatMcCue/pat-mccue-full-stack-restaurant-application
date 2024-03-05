@@ -53,7 +53,7 @@ function Dishes({ restId, searchTerm }) {
                             <CardImg
                                 top={true}
                                 style={{ height: 150, width: 150 }}
-                                src={`http://localhost:1337${res.image.url}`}
+                                src={res.image.url}
                             />
                             <CardBody style={{ height: '400px', overflow: 'hidden' }}>
                                 <CardText
