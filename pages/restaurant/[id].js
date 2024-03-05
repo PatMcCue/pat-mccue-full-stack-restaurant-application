@@ -10,14 +10,11 @@ import {
 } from '@apollo/client';
 import { Dishes, Cart } from '../../src/components';
 
-const DishList = ({ id }) => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
-    const [query, setQuery] = useState('');
-
+const DishList = ({ restaurantId }) => {
     // Define the GraphQL query for fetching dishes based on the restaurant ID
     const GET_DISHES = gql`
-        query {
-            dishes(where: { restaurant: { id: 1 } }) {
+        query GetDishes($restaurantId: ID!) {
+            dishes(where: { restaurant: { id: $restaurantId } }) {
                 id
                 name
             }
@@ -25,9 +22,9 @@ const DishList = ({ id }) => {
     `;
 
     // Fetch the dishes using the Apollo useQuery hook
-    const { loading, error, data } = useQuery(GET_DISHES);
-    console.log('data', data);
-    // const dishes = data.dishes;
+    const { loading, error, data } = useQuery(GET_DISHES, {
+        variables: { restaurantId },
+    });
 
     if (loading) {
         return <p>Loading...</p>;
@@ -36,7 +33,13 @@ const DishList = ({ id }) => {
     if (error) {
         return <p>Error loading dishes</p>;
     }
-    return <p>Dish list here</p>;
+    
+    return (
+        <div>
+            <p>Dish list here</p>
+            {/* Render your dishes here using data.dishes */}
+        </div>
+    );
 };
 
 function RestaurantDetails() {
@@ -46,16 +49,38 @@ function RestaurantDetails() {
     const link = new HttpLink({ uri: `${API_URL}/graphql` });
     const cache = new InMemoryCache();
     const client = new ApolloClient({ link, cache });
-    if (!id) {
-        return <p>Loading...</p>; // You can add better loading handling
-    }
     const [searchTerm, setSearchTerm] = useState('');
+
+    // Define the GraphQL query for fetching restaurant details
+    const GET_RESTAURANT = gql`
+        query GetRestaurant($id: ID!) {
+            restaurant(id: $id) {
+                id
+                name
+            }
+        }
+    `;
+
+    // Fetch the restaurant details using the Apollo useQuery hook
+    const { loading: restaurantLoading, error: restaurantError, data: restaurantData } = useQuery(GET_RESTAURANT, {
+        variables: { id },
+    });
+
+    if (restaurantLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (restaurantError) {
+        return <p>Error loading restaurant details</p>;
+    }
+
+    const restaurantName = restaurantData.restaurant.name;
 
     return (
         <ApolloProvider client={client}>
             <div>
                 <h1>Restaurant Details</h1>
-                <h2>Restaurant ID: {id}</h2>
+                <h2>Restaurant Name: {restaurantName}</h2>
 
                 {/* Search bar */}
                 <input
@@ -67,7 +92,7 @@ function RestaurantDetails() {
                 />
 
                 {/* Display all dishes */}
-                <Dishes restId={id} searchTerm={searchTerm} />
+                <DishList restaurantId={id} searchTerm={searchTerm} />
 
                 <Cart />
             </div>
