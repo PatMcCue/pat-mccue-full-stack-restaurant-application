@@ -12,9 +12,7 @@ const OrderSuccess = () => {
                 data-aspect-ratio="1"
                 data-width="100%"
             >
-                <a href="https://tenor.com/view/motorbike-motorbikes-delivery-deliveryservice-deliveryfood-gif-18146487">
-                    Motorbike Motorbikes Sticker
-                </a>
+                <img src="https://media.tenor.com/images/a12b34c56789abcdef0123456789.gif" alt="Motorbike Motorbikes Sticker" />
                 from <a href="https://tenor.com/search/motorbike-stickers">Motorbike Stickers</a>
             </div>
             <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
