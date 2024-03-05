@@ -53,7 +53,7 @@ function Dishes({ restId, searchTerm }) {
                             <CardImg
                                 top={true}
                                 style={{ height: 150, width: 150 }}
-                                src={res.image.url}
+                                src={`https://hidden-plains-66088-f5a6410d8330.herokuapp.com${res.image.url}`}
                             />
                             <CardBody style={{ height: '400px', overflow: 'hidden' }}>
                                 <CardText
