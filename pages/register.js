@@ -1,7 +1,4 @@
-/* /pages/register.js */
-
 import React, { useState, useContext } from 'react';
-
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { registerUser } from '../src/components/Auth';
 import AppContext from '../src/Providers/Context';
@@ -10,7 +7,33 @@ const Register = () => {
     const [data, setData] = useState({ email: '', username: '', password: '' });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
+    const [submitted, setSubmitted] = useState(false); // Track form submission
     const appContext = useContext(AppContext);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setData({ ...data, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+
+        if (data.username && data.email && data.password) {
+            setLoading(true);
+            registerUser(data.username, data.email, data.password)
+                .then((res) => {
+                    appContext.setUser(res.data.user);
+                    setLoading(false);
+                    console.log(`Registered user: ${JSON.stringify(res.data)}`);
+                })
+                .catch((error) => {
+                    console.log(`Error in registration: ${error}`);
+                    setLoading(false);
+                });
+        }
+    };
+
     return (
         <Container>
             <Row>
@@ -20,104 +43,60 @@ const Register = () => {
                             <img src="http://localhost:1337/uploads/5a60a9d26a764e7cba1099d8b157b5e9.png" />
                         </div>
                         <section className="wrapper">
-                            {Object.entries(error).length !== 0 &&
-                                error.constructor === Object &&
-                                error.message.map((error) => {
-                                    return (
-                                        <div
-                                            key={error.messages[0].id}
-                                            style={{ marginBottom: 10 }}
-                                        >
-                                            <small style={{ color: 'red' }}>
-                                                {error.messages[0].message}
-                                            </small>
-                                        </div>
-                                    );
-                                })}
-                            <Form>
-                                <fieldset disabled={loading}>
-                                    <FormGroup>
-                                        <Label>Username:</Label>
-                                        <Input
-                                            disabled={loading}
-                                            onChange={(e) =>
-                                                setData({ ...data, username: e.target.value })
-                                            }
-                                            value={data.username}
-                                            type="text"
-                                            name="username"
-                                            style={{ height: 50, fontSize: '1.2em' }}
-                                            required
-                                        />
-                                        {data.username === '' && <small style={{ color: 'red' }}>Please enter your username.</small>}
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>Email:</Label>
-                                        <Input
-                                            onChange={(e) =>
-                                                setData({ ...data, email: e.target.value })
-                                            }
-                                            value={data.email}
-                                            type="email"
-                                            name="email"
-                                            style={{ height: 50, fontSize: '1.2em' }}
-                                            required
-                                        />
-                                    </FormGroup>
-                                    <FormGroup style={{ marginBottom: 30 }}>
-                                        <Label>Password:</Label>
-                                        <Input
-                                            onChange={(e) =>
-                                                setData({ ...data, password: e.target.value })
-                                            }
-                                            value={data.password}
-                                            type="password"
-                                            name="password"
-                                            style={{ height: 50, fontSize: '1.2em' }}
-                                            required
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <span>
-                                            <a href="">
-                                                <small>Forgot Password?</small>
-                                            </a>
-                                        </span>
-                                        <Button
-                                            style={{
-                                                float: 'right',
-                                                width: 120,
-                                                backgroundColor: '#7A9D54',
-                                            }}
-                                            disabled={loading}
-                                            onClick={() => {
-                                                setLoading(true);
-                                                registerUser(
-                                                    data.username,
-                                                    data.email,
-                                                    data.password
-                                                )
-                                                    .then((res) => {
-                                                        // set authed user in global context object
-                                                        appContext.setUser(res.data.user);
-                                                        setLoading(false);
-                                                        console.log(
-                                                            `registered user: ${JSON.stringify(
-                                                                res.data
-                                                            )}`
-                                                        );
-                                                    })
-                                                    .catch((error) => {
-                                                        console.log(`error in register: ${error}`);
-                                                        //setError(error.response.data);
-                                                        setLoading(false);
-                                                    });
-                                            }}
-                                        >
-                                            {loading ? 'Loading...' : 'Submit'}
-                                        </Button>
-                                    </FormGroup>
-                                </fieldset>
+                            <Form onSubmit={handleSubmit}>
+                                <FormGroup>
+                                    <Label>Username:</Label>
+                                    <Input
+                                        onChange={handleInputChange}
+                                        value={data.username}
+                                        type="text"
+                                        name="username"
+                                        style={{ height: 50, fontSize: '1.2em' }}
+                                        required
+                                    />
+                                    {submitted && !data.username && (
+                                        <small style={{ color: 'red' }}>Please enter your username.</small>
+                                    )}
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>Email:</Label>
+                                    <Input
+                                        onChange={handleInputChange}
+                                        value={data.email}
+                                        type="email"
+                                        name="email"
+                                        style={{ height: 50, fontSize: '1.2em' }}
+                                        required
+                                    />
+                                    {submitted && !data.email && (
+                                        <small style={{ color: 'red' }}>Please enter your email.</small>
+                                    )}
+                                </FormGroup>
+                                <FormGroup style={{ marginBottom: 30 }}>
+                                    <Label>Password:</Label>
+                                    <Input
+                                        onChange={handleInputChange}
+                                        value={data.password}
+                                        type="password"
+                                        name="password"
+                                        style={{ height: 50, fontSize: '1.2em' }}
+                                        required
+                                    />
+                                    {submitted && !data.password && (
+                                        <small style={{ color: 'red' }}>Please enter your password.</small>
+                                    )}
+                                </FormGroup>
+                                <FormGroup>
+                                    <span>
+                                        <a href="#"><small>Forgot Password?</small></a>
+                                    </span>
+                                    <Button
+                                        style={{ float: 'right', width: 120, backgroundColor: '#7A9D54' }}
+                                        disabled={loading}
+                                    >
+                                        {loading ? 'Loading...' : 'Submit'}
+                                    </Button>
+                                </FormGroup>
                             </Form>
                         </section>
                     </div>
@@ -126,4 +105,5 @@ const Register = () => {
         </Container>
     );
 };
+
 export default Register;
