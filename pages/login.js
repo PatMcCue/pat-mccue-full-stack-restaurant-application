@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { login } from '../src/components/Auth';
 import { useApp } from '../src/Providers/Context';
@@ -7,31 +6,23 @@ import { useApp } from '../src/Providers/Context';
 function Login() {
     const [data, updateData] = useState({ identifier: '', password: '' });
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const router = useRouter();
+    const [errors, setErrors] = useState({});
     const { setUser, isAuthenticated, setIsAuthenticated } = useApp();
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            router.push('/'); // redirect if you're already logged in
-        }
-    }, []);
-
-    function onChange(event) {
+    const handleChange = (event) => {
         updateData({ ...data, [event.target.name]: event.target.value });
-    }
+    };
 
     const handleSubmit = () => {
         setLoading(true);
         login(data.identifier, data.password)
             .then((res) => {
-                // set authed User in global context to update header/app state
                 setUser(res.data.user);
                 setIsAuthenticated(true);
                 setLoading(false);
             })
             .catch((error) => {
-                setError(error.response.data);
+                setErrors(error.response.data);
                 setLoading(false);
             });
     };
@@ -43,27 +34,19 @@ function Login() {
                     <div className="paper">
                         <div className="header"></div>
                         <section className="wrapper">
-                            {Object.entries(error).length !== 0 &&
-                                error.constructor === Object &&
-                                error.message.map((error) => {
-                                    return (
-                                        <div
-                                            key={error.messages[0].id}
-                                            style={{ marginBottom: 10 }}
-                                        >
-                                            <small style={{ color: 'red' }}>
-                                                {error.messages[0].message}
-                                            </small>
-                                        </div>
-                                    );
-                                })}
+                            {Object.keys(errors).length > 0 &&
+                                Object.values(errors).map((error) => (
+                                    <div key={error.id} style={{ marginBottom: '10px' }}>
+                                        <small style={{ color: 'red' }}>{error.message}</small>
+                                    </div>
+                                ))}
                             <Form>
                                 <fieldset disabled={loading}>
                                     <FormGroup>
                                         <Label>Email:</Label>
                                         <Input
                                             type="email"
-                                            onChange={(event) => onChange(event)}
+                                            onChange={handleChange}
                                             name="identifier"
                                             style={{ height: 50, fontSize: '1.2em' }}
                                             required
@@ -72,7 +55,7 @@ function Login() {
                                     <FormGroup style={{ marginBottom: 30 }}>
                                         <Label>Password:</Label>
                                         <Input
-                                            onChange={(event) => onChange(event)}
+                                            onChange={handleChange}
                                             type="password"
                                             name="password"
                                             style={{ height: 50, fontSize: '1.2em' }}
