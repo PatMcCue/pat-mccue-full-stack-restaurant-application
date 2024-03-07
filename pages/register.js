@@ -47,6 +47,7 @@ const Register = () => {
                                             type="text"
                                             name="username"
                                             style={{ height: 50, fontSize: '1.2em' }}
+                                            required
                                         />
                                     </FormGroup>
                                     <FormGroup>
@@ -59,6 +60,7 @@ const Register = () => {
                                             type="email"
                                             name="email"
                                             style={{ height: 50, fontSize: '1.2em' }}
+                                            required
                                         />
                                     </FormGroup>
                                     <FormGroup style={{ marginBottom: 30 }}>
@@ -71,6 +73,7 @@ const Register = () => {
                                             type="password"
                                             name="password"
                                             style={{ height: 50, fontSize: '1.2em' }}
+                                            required
                                         />
                                     </FormGroup>
                                     <FormGroup>

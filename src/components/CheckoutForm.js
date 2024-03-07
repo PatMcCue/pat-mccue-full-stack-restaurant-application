@@ -86,20 +86,20 @@ function CheckoutForm() {
       <FormGroup style={{ display: "flex" }}>
         <div style={{ flex: "0.90", marginRight: 10 }}>
           <Label>Address</Label>
-          <Input name="address" onChange={onChange} />
+          <Input name="address" onChange={onChange} required />
         </div>
       </FormGroup>
       <FormGroup style={{ display: "flex" }}>
         <div style={{ flex: "0.65", marginRight: "6%" }}>
           <Label>City</Label>
-          <Input name="city" onChange={onChange} />
+          <Input name="city" onChange={onChange} required />
         </div>
         <div style={{ flex: "0.25", marginRight: 0 }}>
           <Label>State</Label>
-          <Input name="state" onChange={onChange} />
+          <Input name="state" onChange={onChange} required/>
         </div>
       </FormGroup>
-      <CardSection data={data} stripeError={error} submitOrder={submitOrder} />
+      <CardSection data={data} stripeError={error} submitOrder={submitOrder} required/>
     </div>
   );
 }

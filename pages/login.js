@@ -62,9 +62,11 @@ function Login() {
                                     <FormGroup>
                                         <Label>Email:</Label>
                                         <Input
+                                            type="email"
                                             onChange={(event) => onChange(event)}
                                             name="identifier"
                                             style={{ height: 50, fontSize: '1.2em' }}
+                                            required
                                         />
                                     </FormGroup>
                                     <FormGroup style={{ marginBottom: 30 }}>
@@ -74,6 +76,7 @@ function Login() {
                                             type="password"
                                             name="password"
                                             style={{ height: 50, fontSize: '1.2em' }}
+                                            required
                                         />
                                     </FormGroup>
 
