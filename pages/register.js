@@ -49,6 +49,7 @@ const Register = () => {
                                             style={{ height: 50, fontSize: '1.2em' }}
                                             required
                                         />
+                                        {data.username === '' && <small style={{ color: 'red' }}>Please enter your username.</small>}
                                     </FormGroup>
                                     <FormGroup>
                                         <Label>Email:</Label>
