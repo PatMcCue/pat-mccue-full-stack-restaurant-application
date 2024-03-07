@@ -29,6 +29,11 @@ function CheckoutForm() {
     async function submitOrder() {
         // event.preventDefault();
         // // Use elements.getElement to get a reference to the mounted Element.
+
+        if (!data.address || !data.city || !data.state) {
+          setError("Please fill in all required fields.");
+          return;
+        }
         const cardElement = elements.getElement(CardElement);
 
         // // Pass the Element directly to other Stripe.js methods:
