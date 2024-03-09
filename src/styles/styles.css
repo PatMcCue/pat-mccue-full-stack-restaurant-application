@@ -18,6 +18,7 @@
     border-radius: 14px;
     margin-top: 90px;
     min-width: 450px;
+    min-height: 900px;
 }
 .notification {
     color: #ab003c;
