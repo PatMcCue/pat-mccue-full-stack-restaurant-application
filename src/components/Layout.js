@@ -33,7 +33,8 @@ const Layout = (props) => {
                     <NavItem>
                         {user ? (
                             <>
-                                <h5>Hello, {user.username}</h5>
+                                <h5>Hello, {user.username} </h5>
+                                <h6>{user.email}</h6>
                                 <Link href="/">
                                     <a
                                         className="nav-link"
